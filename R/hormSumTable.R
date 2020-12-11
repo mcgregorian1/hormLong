@@ -9,7 +9,7 @@
 #' result <- hormBaseline(data=hormLynx, criteria=2, by_var='AnimalID, Hormone', time_var='datetime', conc_var='Conc' )
 #' hormSumTable(result) 
 
-hormSumTable <- function(x, num_decimals=2){
+hormSumTable <- function(x, num_decimals=2, outputcsv=FALSE, outputPath=getwd()){
 #-- checks --#  
   if( class(x)!='hormLong'){
       stop('Object needs to be hormLong.  Run hormBaseline() first')
@@ -44,6 +44,8 @@ hormSumTable <- function(x, num_decimals=2){
                               'base_mean','peak_mean','peak_base')]
 
 #--- output table ---#
-    write.csv(ds_out, file='hormSumTable.csv', quote=F, row.names=F,na='')
-    cat( paste0('\n *********\nNote: table saved at: \n', getwd(),'/hormSumTable.csv \n***** \n\n')  )
+    if(outputcsv){
+      write.csv(ds_out, file=paste0(outfilePath, 'hormSumTable.csv'), quote=F, row.names=F,na='')
+     }
+  return(ds_out)
 }
